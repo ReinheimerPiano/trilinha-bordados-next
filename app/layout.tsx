@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import JsonLd from "@/components/JsonLd";
+import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 
 const lexend = Lexend({
@@ -48,9 +49,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/images/trilhinha_logo.svg", type: "image/svg+xml" }],
-    shortcut: ["/images/trilhinha_logo.svg"],
-    apple: [{ url: "/images/logo.png", sizes: "180x180", type: "image/png" }],
+    icon: [{ url: asset("/images/trilhinha_logo.svg"), type: "image/svg+xml" }],
+    shortcut: [asset("/images/trilhinha_logo.svg")],
+    apple: [{ url: asset("/images/logo.png"), sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",

@@ -1,4 +1,5 @@
 import WhatsAppCta from "@/components/WhatsAppCta";
+import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 
 type HomeHeroProps = {
@@ -12,7 +13,7 @@ export default function HomeHero({ whatsappLink }: HomeHeroProps) {
         aria-hidden="true"
         className="absolute inset-y-0 -right-[10%] w-[62%] bg-cover bg-right opacity-20 blur-[1.5px] md:-right-[12%] md:opacity-25"
         style={{
-          backgroundImage: "url('/images/bg-rigth-hero.png')",
+          backgroundImage: `url('${asset("/images/bg-rigth-hero.png")}')`,
           backgroundPosition: "right center",
         }}
       />

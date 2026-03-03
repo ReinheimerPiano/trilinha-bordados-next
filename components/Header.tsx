@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { asset } from "@/src/lib/asset";
 
 const links = [
   { href: "/bordado-computadorizado/", label: "Bordado Computadorizado" },
@@ -14,7 +15,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-brand-light/20 bg-brand-dark/85 backdrop-blur-xl">
       <div className="page-wrap flex items-center justify-between gap-3 py-4">
         <Link href="/" className="group flex items-center gap-3.5 transition-transform duration-150 active:scale-[0.98]">
-          <Image src="/images/trilhinha_logo_white-mix.svg" alt="Logo Trilinha Bordados" width={52} height={52} priority />
+          <Image src={asset("/images/trilhinha_logo_white-mix.svg")} alt="Logo Trilinha Bordados" width={52} height={52} priority />
           <span className="font-brand text-brand-light transition-opacity duration-200 group-hover:opacity-90">
             <span className="block text-[1rem] leading-[0.84] sm:text-[1.12rem] md:text-[1.22rem]">Trilinha</span>
             <span className="block text-[1rem] leading-[0.84] sm:text-[1.12rem] md:text-[1.22rem]">Bordados</span>

@@ -1,3 +1,5 @@
+import { asset } from "@/src/lib/asset";
+
 export const googleMapsPhotos: string[] = [
   "/images/maps-gallery/map-photo-01.jpg",
   "/images/maps-gallery/map-photo-02.jpg",
@@ -10,5 +12,5 @@ export const googleMapsPhotos: string[] = [
   "/images/maps-gallery/map-photo-09.jpg",
   "/images/maps-gallery/map-photo-10.jpg",
   "/images/maps-gallery/map-photo-11.jpg",
-  "/images/maps-gallery/map-photo-12.jpg"
-];
+  "/images/maps-gallery/map-photo-12.jpg",
+].map(asset);

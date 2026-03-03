@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 import { buildWhatsAppLink } from "@/src/lib/whatsapp";
 
@@ -38,7 +39,7 @@ export default function Footer() {
         <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
           <div className="flex items-center justify-center gap-3 md:justify-start">
             <Image
-              src="/images/trilhinha_logo_white.svg"
+              src={asset("/images/trilhinha_logo_white.svg")}
               alt="Logo Trilinha Bordados"
               width={28}
               height={28}

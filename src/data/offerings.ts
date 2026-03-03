@@ -1,4 +1,5 @@
 import shopeeStaticProducts from "@/src/data/shopeeProducts.static.json";
+import { asset } from "@/src/lib/asset";
 
 export type Segment = "computadorizado" | "patch" | "afetivo";
 export type OfferKind = "servico" | "item";
@@ -81,6 +82,14 @@ function detectTags(title: string, orders: number): string[] {
   if (text.includes("nome")) tags.push("Personalizado");
   if (tags.length === 0) tags.push("Shopee");
   return tags.slice(0, 3);
+}
+
+function applyAssetPath<T extends { image?: string }>(items: T[]): void {
+  items.forEach((item) => {
+    if (item.image) {
+      item.image = asset(item.image);
+    }
+  });
 }
 
 const patchItemsFromShopee: ProductCatalogItem[] = (shopeeStaticProducts as ShopeeStatic[]).map(
@@ -517,6 +526,13 @@ export const homeServiceSegments: HomeServiceSegment[] = [
     image: "/images/products/porta maternidade 2.jfif",
   },
 ];
+
+applyAssetPath(patchItemsFromShopee);
+applyAssetPath(computerizadoServices);
+applyAssetPath(patchServices);
+applyAssetPath(afetivoServices);
+applyAssetPath(patchItemsManual);
+applyAssetPath(homeServiceSegments);
 
 export const allServices: ServiceCatalogItem[] = [
   ...offeringsBySegment.computadorizado.servicos,
