@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-brand-dark text-brand-light antialiased font-sans;
+    background-image: radial-gradient(circle at 12% 8%, rgba(150, 110, 214, 0.26) 0%, transparent 34%),
+      radial-gradient(circle at 85% 0%, rgba(13, 214, 190, 0.16) 0%, transparent 27%);
+  }
+
+  h1,
+  h2 {
+    text-transform: capitalize;
+  }
+}
+
+@layer components {
+  .page-wrap {
+    @apply mx-auto w-full max-w-6xl px-4 md:px-8;
+  }
+
+  .glass-panel {
+    @apply rounded-2xl border border-brand-light/15 bg-brand-light/5 backdrop-blur;
+  }
+
+  .headline {
+    @apply text-3xl font-bold tracking-tight md:text-5xl;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold tracking-tight md:text-3xl;
+  }
+
+  .soft-text {
+    @apply text-brand-light/80;
+  }
+
+  .btn-shopee {
+    @apply inline-flex rounded-full px-4 py-2 text-sm font-semibold text-white transition;
+    background-color: #ee4d2d;
+  }
+
+  .btn-shopee:hover {
+    background-color: #d84326;
+  }
+
+  .embed-map-responsive {
+    position: relative;
+    text-align: right;
+    width: 100%;
+    height: 0;
+    padding-bottom: 66.66666666666666%;
+  }
+
+  .embed-map-container {
+    overflow: hidden;
+    background: none !important;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .embed-map-frame {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,3 @@
+# ads.txt da Trilinha Bordados
+# Este domínio não autoriza atualmente nenhuma plataforma de venda de anúncios.
+# Se você passar a monetizar com AdSense/AdManager, substitua este arquivo pelas linhas oficiais da plataforma.
