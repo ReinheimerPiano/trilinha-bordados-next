@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 import { buildWhatsAppLink } from "@/src/lib/whatsapp";
@@ -34,52 +34,53 @@ export default function Footer() {
   const phoneCallLink = `tel:+${SITE.whatsapp}`;
 
   return (
-    <footer className="mt-14 border-t border-brand-light/20">
-      <div className="page-wrap py-8 text-sm text-brand-light/85">
+    <footer className="mt-14 border-t-2 border-foreground/90">
+      <div className="page-wrap py-8 text-sm text-foreground/85">
         <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
           <div className="flex items-center justify-center gap-3 md:justify-start">
             <Image
-              src={asset("/images/trilhinha_logo_white.svg")}
+              src={asset("/images/trilhinha_logo.svg")}
               alt="Logo Trilinha Bordados"
               width={28}
               height={28}
+              className="block dark:hidden"
+            />
+            <Image
+              src={asset("/images/trilhinha_logo_white-mix.svg")}
+              alt="Logo Trilinha Bordados"
+              width={28}
+              height={28}
+              className="hidden dark:block"
             />
             <div className="text-center md:text-left">
-              <p className="font-brand text-base text-brand-light">{SITE.name}</p>
-              <p className="text-xs text-brand-light/70">
-                {SITE.city}/{SITE.state}
-              </p>
+              <p className="font-brand text-base font-bold text-foreground">{SITE.name}</p>
+              <p className="text-xs text-foreground/70">{SITE.city}/{SITE.state}</p>
             </div>
           </div>
 
           <div className="flex flex-col items-center gap-1 text-center md:items-end md:text-right">
-            <a
-              href={phoneCallLink}
-              className="font-semibold text-brand-light hover:text-accent-teal"
-            >
+            <a href={phoneCallLink} className="font-semibold text-foreground hover:text-accent">
               {SITE.phoneDisplay}
             </a>
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-brand-light/80 hover:text-accent-teal"
+              className="text-xs text-foreground/80 hover:text-accent"
             >
               Conversar no WhatsApp
             </a>
           </div>
         </div>
 
-        <div className="mt-5 rounded-xl border border-brand-light/15 bg-brand-light/5 p-3">
-          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wide text-brand-light/75">
-            Canais de Venda
-          </p>
+        <div className="mt-5 rounded-[var(--radius-md)] border-2 border-foreground bg-surface/95 p-3 shadow-pop">
+          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wide text-foreground/75">Canais de Venda</p>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <a
               href={SITE.socials.shopee}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-full border border-[#EE4D2D]/50 bg-[#EE4D2D]/15 px-2.5 py-1 text-xs font-semibold text-[#EE4D2D]"
+              className="badge gap-1 border-accent/35 bg-accent/10 text-foreground hover:bg-accent/20"
               aria-label="Shopee Seller"
             >
               <ShopeeIcon />
@@ -89,7 +90,7 @@ export default function Footer() {
               href={SITE.socials.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-full border border-[#1877F2]/50 bg-[#1877F2]/15 px-2.5 py-1 text-xs font-semibold text-[#7EB4FF]"
+              className="badge gap-1 border-quaternary/50 bg-quaternary/20 text-foreground hover:bg-quaternary/35"
               aria-label="Facebook Marketplace"
             >
               <MarketplaceIcon />
@@ -98,9 +99,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-4 text-center text-xs text-brand-light/70">
-          © {year} {SITE.name}
-        </p>
+        <p className="mt-4 text-center text-xs text-foreground/70">(c) {year} {SITE.name}</p>
       </div>
     </footer>
   );

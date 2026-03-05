@@ -4,14 +4,9 @@ type WhatsAppCtaProps = {
   className?: string;
 };
 
-const baseClassName =
-  "inline-flex rounded-full bg-accent-green px-4 py-2 text-sm font-semibold text-brand-dark transition hover:brightness-95 active:scale-[0.98]";
+const baseClassName = "btn-whatsapp";
 
-export default function WhatsAppCta({
-  href,
-  label = "Falar no WhatsApp",
-  className = "",
-}: WhatsAppCtaProps) {
+export default function WhatsAppCta({ href, label = "Falar no WhatsApp", className = "" }: WhatsAppCtaProps) {
   return (
     <a
       href={href}

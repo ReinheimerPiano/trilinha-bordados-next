@@ -7,6 +7,7 @@ import ServiceSegmentsSection from "@/components/home/ServiceSegmentsSection";
 import ReadyProductsSection from "@/components/home/ReadyProductsSection";
 import ServicesSection from "@/components/home/MachineServicesSection";
 import { homeServiceSegments, offeringsBySegment } from "@/src/data/offerings";
+import shopeeStaticProducts from "@/src/data/shopeeProducts.static.json";
 import { SITE } from "@/src/lib/site";
 import { buildWhatsAppLink } from "@/src/lib/whatsapp";
 
@@ -29,7 +30,21 @@ const whatsappLink = buildWhatsAppLink({
 });
 
 export default function HomePage() {
-  const produtosProntos = offeringsBySegment.patch.itens;
+  const patchItems = offeringsBySegment.patch.itens;
+  const shopeeOrder = (shopeeStaticProducts as { shopeeUrl: string }[]).map(
+    (item) => item.shopeeUrl
+  );
+  const patchItemsByShopeeUrl = new Map(
+    patchItems.map((item) => [item.shopeeUrl, item] as const)
+  );
+  const lancamentos = patchItems.filter(
+    (item) => item.status === "em_breve_shopee"
+  );
+  const produtosShopeeOrdenados = shopeeOrder
+    .map((shopeeUrl) => patchItemsByShopeeUrl.get(shopeeUrl))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  const produtosProntos = [...lancamentos, ...produtosShopeeOrdenados]
+    .slice(0, 6);
   const servicosBordado = [
     offeringsBySegment.computadorizado.servicos[0],
     offeringsBySegment.patch.servicos[0],
@@ -56,7 +71,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={itemList} />
-      <main className="space-y-10 pb-2 md:pb-4">
+      <main className="pb-2 md:pb-4">
         <HomeHero whatsappLink={whatsappLink} />
 
         <ServiceSegmentsSection segments={homeServiceSegments} />

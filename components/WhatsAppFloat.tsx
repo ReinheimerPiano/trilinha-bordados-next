@@ -10,9 +10,9 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com a Trilinha Bordados no WhatsApp"
-      className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-accent-green px-4 py-2 text-sm font-semibold text-brand-dark shadow-glow transition hover:brightness-95 active:scale-[0.98]"
+      className="btn-whatsapp fixed bottom-5 right-5 z-50 gap-2 px-4 py-2 text-sm font-semibold"
     >
-      <span className="text-base leading-none">💬</span>
+      <span className="inline-flex h-5 w-5 items-center justify-center text-[12px] leading-none">💬</span>
       <span className="hidden sm:inline">Falar no WhatsApp</span>
     </a>
   );

@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
+﻿import type { Metadata } from "next";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,14 +8,19 @@ import JsonLd from "@/components/JsonLd";
 import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 
-const lexend = Lexend({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-lexend",
+  variable: "--font-jakarta",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
 });
 
 const siteTitle = "Trilinha Bordados";
 const siteDescription =
-  "Bordado computadorizado em jalecos, polos e uniformes em Maringá–PR. Patches bordados (termocolante/velcro) com envio para todo o Brasil.";
+  "Bordado computadorizado em jalecos, polos e uniformes em Maringá-PR. Patches bordados (termocolante/velcro) com envio para todo o Brasil.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -82,6 +87,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const themeInitScript = `
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+      var root = document.documentElement;
+      root.classList.toggle('dark', theme === 'dark');
+      root.style.colorScheme = theme;
+    } catch (e) {}
+  })();
+  `;
+
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -143,17 +160,20 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="pt-BR">
-      <body className={`${lexend.variable} min-h-screen`}>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className={`${jakarta.variable} ${outfit.variable} min-h-screen`}>
         <JsonLd data={localBusiness} />
         <JsonLd data={webSite} />
         <Header />
-        <div className="page-wrap pt-5 md:pt-6">
-          <div className="glass-panel p-4 md:p-6">{children}</div>
-        </div>
+        {children}
         <Footer />
         <WhatsAppFloat />
       </body>
     </html>
   );
 }
+
+

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import WhatsAppCta from "@/components/WhatsAppCta";
 import type { ProductCatalogItem } from "@/src/data/offerings";
 import { SITE } from "@/src/lib/site";
@@ -8,26 +8,28 @@ type ReadyProductsSectionProps = {
   items: ProductCatalogItem[];
 };
 
-export default function ReadyProductsSection({ items }: ReadyProductsSectionProps) {
+export default function ReadyProductsSection({
+  items,
+}: ReadyProductsSectionProps) {
   return (
     <section className="glass-panel space-y-4 p-6 md:p-8">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="section-title">Produtos prontos</h2>
+        <h2 className="section-title">Produtos Mais Pedidos</h2>
         <Link
           href="/patches-bordados/"
-          className="text-sm font-semibold text-accent-teal hover:text-brand-teal"
+          className="text-sm font-semibold text-accent hover:text-brand-teal"
         >
-          Ver todos os patches →
+          Ver Mais Produtos -&gt;
         </Link>
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
           <article
             key={item.title}
-            className="group rounded-xl border border-brand-light/15 bg-brand-light/5 p-5"
+            className="group rounded-xl border-2 border-foreground/55 bg-surface/95 p-5"
           >
             {item.image ? (
-              <div className="relative mb-3 aspect-[4/3] overflow-hidden rounded-lg border border-brand-light/10 bg-gradient-to-br from-deep-purple/60 to-deep-teal/60">
+              <div className="relative mb-3 aspect-[4/3] overflow-hidden rounded-lg border border-foreground/30 bg-gradient-to-br from-deep-purple/60 to-deep-teal/60">
                 <img
                   src={item.image}
                   alt={item.title}
@@ -40,7 +42,7 @@ export default function ReadyProductsSection({ items }: ReadyProductsSectionProp
               {item.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-brand-purple/20 px-2.5 py-1 text-xs font-semibold text-brand-light"
+                  className="rounded-full bg-brand-purple/20 px-2.5 py-1 text-xs font-semibold text-foreground"
                 >
                   {tag}
                 </span>
@@ -48,8 +50,8 @@ export default function ReadyProductsSection({ items }: ReadyProductsSectionProp
             </div>
             <h3 className="text-base font-semibold">{item.title}</h3>
             <p className="soft-text mt-2 text-sm">{item.description}</p>
-            <div className="mt-3 flex w-fit items-center rounded-full border border-accent-green/40 bg-accent-green/10 px-2.5 py-1 text-xs font-semibold text-accent-green">
-              {item.displayOrders} vendas
+            <div className="mt-3 flex w-fit items-center rounded-full border border-success/40 bg-success/10 px-2.5 py-1 text-xs font-semibold text-success">
+              {item.displayOrders} pedidos
             </div>
             {item.status === "na_shopee" ? (
               <div className="mt-4">
@@ -64,7 +66,7 @@ export default function ReadyProductsSection({ items }: ReadyProductsSectionProp
               </div>
             ) : (
               <div className="mt-4 space-y-2">
-                <p className="text-xs font-semibold text-brand-light/90">
+                <p className="text-xs font-semibold text-foreground/90">
                   {item.whatsappOnlyMessage}
                 </p>
                 <WhatsAppCta

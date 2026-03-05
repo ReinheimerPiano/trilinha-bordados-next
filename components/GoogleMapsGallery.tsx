@@ -1,3 +1,4 @@
+﻿import PackDecor from "@/components/brand/PackDecor";
 import { googleMapsPhotos } from "@/src/data/googleMapsPhotos";
 import { SITE } from "@/src/lib/site";
 
@@ -5,7 +6,8 @@ const googleMapsBusinessLink = "https://maps.app.goo.gl/GpvovgSf9HrHq4VBA";
 
 export default function GoogleMapsGallery() {
   return (
-    <section className="space-y-4 rounded-2xl border border-brand-light/15 bg-brand-light/5 p-6 md:p-8">
+    <section className="glass-panel relative space-y-4 p-6 md:p-8">
+      <PackDecor />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="section-title">Fotos reais do ateliê</h2>
@@ -17,7 +19,7 @@ export default function GoogleMapsGallery() {
           href={googleMapsBusinessLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex rounded-full border border-brand-light/40 px-4 py-2 text-sm font-semibold text-brand-light transition hover:bg-brand-light/10"
+          className="text-sm font-semibold text-accent hover:text-brand-teal"
         >
           Ver todas no Google
         </a>
@@ -30,7 +32,7 @@ export default function GoogleMapsGallery() {
             href={googleMapsBusinessLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group overflow-hidden rounded-lg border border-brand-light/10 bg-brand-dark/30"
+            className="group overflow-hidden rounded-[1.4rem] rounded-br-none border-4 border-foreground bg-surface/92 shadow-[8px_8px_0px_0px_rgba(22,22,22,0.28)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[10px_10px_0px_0px_rgba(22,22,22,0.33)] dark:shadow-[7px_7px_0px_0px_rgba(229,229,229,0.22)] dark:hover:shadow-[9px_9px_0px_0px_rgba(229,229,229,0.3)]"
           >
             <img
               src={photoUrl}
@@ -44,4 +46,5 @@ export default function GoogleMapsGallery() {
     </section>
   );
 }
+
 

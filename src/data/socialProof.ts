@@ -20,9 +20,8 @@ export type SocialReview = {
 
 export const socialProofSummary = {
   title: "O que nossos clientes dizem",
-  subtitle: "Avaliações reais sobre bordado computadorizado e patches (Maringá–PR e envio Brasil)",
-  intro:
-    "A Trilinha Bordados, em Maringá–PR, recebe avaliações destacando bordado computadorizado em jaleco, polo e uniforme, além de patch bordado termocolante e velcro.",
+  subtitle: "Avaliações reais sobre nossos serviços e produtos (Locais e Shopee)",
+ 
   rating: 5.0,
   totalReviews: 25,
   reviewBreakdown: {
