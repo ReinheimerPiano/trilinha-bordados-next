@@ -1,10 +1,15 @@
-﻿import type { Metadata } from "next";
-import PackDecor from "@/components/brand/PackDecor";
+import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
-import WhatsAppCta from "@/components/WhatsAppCta";
+import PageHero from "@/components/PageHero";
+import SegmentServicesGrid from "@/components/SegmentServicesGrid";
+import SegmentGallery from "@/components/SegmentGallery";
+import FaqSection from "@/components/FaqSection";
+import CtaBanner from "@/components/CtaBanner";
 import { offeringsBySegment } from "@/src/data/offerings";
+import { homeAtelierGallery, homeFaqs } from "@/src/data/home";
 import { SITE } from "@/src/lib/site";
 import { buildWhatsAppLink } from "@/src/lib/whatsapp";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 export const metadata: Metadata = {
   title: "Patches Bordados | Termocolante e Velcro | Trilinha",
@@ -19,13 +24,9 @@ export const metadata: Metadata = {
   },
 };
 
-const whatsappLink = buildWhatsAppLink({
-  phone: SITE.whatsapp,
-  context: "patches",
-});
-
 export default function PatchesBordadosPage() {
-  const { servicos: patchServices, itens: produtosProntos } = offeringsBySegment.patch;
+  const { servicos: patchServices, itens: produtosProntos } =
+    offeringsBySegment.patch;
 
   const itemList = {
     "@context": "https://schema.org",
@@ -47,125 +48,142 @@ export default function PatchesBordadosPage() {
   return (
     <>
       <JsonLd data={itemList} />
-      <main className="py-2 md:py-4">
-        <section className="relative isolate overflow-hidden px-6 py-16 md:py-24">
-          <PackDecor />
-          <div className="relative z-10 mx-auto !max-w-5xl rounded-[3rem] rounded-br-none border-4 border-foreground bg-accent p-8 text-center shadow-[16px_16px_0px_0px_rgba(22,22,22,0.35)] dark:bg-deep-purple dark:shadow-[12px_12px_0px_0px_rgba(229,229,229,0.24)] md:p-14">
-            <h1 className="mb-5 font-brand text-3xl font-extrabold leading-tight text-accentForeground md:text-5xl">
-              Patches Bordados - Produtos Prontos e Personalizados
-            </h1>
-            <p className="mx-auto max-w-3xl text-base font-medium text-accentForeground/90 md:text-xl">
-              Catálogo ordenado por número de pedidos. Itens que ainda não estão
-              na Shopee aparecem com status de lançamento e reserva via WhatsApp.
-            </p>
-            <WhatsAppCta
-              href={whatsappLink}
-              label="Pedir orçamento no WhatsApp"
-              className="mt-6"
-            />
+      <main>
+        <PageHero
+          label="Patches Bordados"
+          title="Patches bordados, prontos e personalizados"
+          description="Patches com termocolante, velcro ou costura. Coleções, kits para motoclube e personalização sob medida com envio para todo o Brasil."
+          tags={["Termocolante", "Velcro", "Costura", "Motoclube", "Geek"]}
+          whatsappMessage="Olá! Tenho interesse em patches bordados. Pode me passar informações?"
+          shopee
+        />
+
+        <SegmentServicesGrid
+          label="Serviços de patch"
+          title="O que produzimos em patches"
+          services={patchServices}
+          whatsappContext="patches"
+          detailLabels={{
+            what: "Aplicação:",
+            where: "Uso indicado:",
+          }}
+        />
+
+        <section className="section section-alt">
+          <div className="wrap">
+            <div className="section-header">
+              <p className="section-label">Catálogo</p>
+              <h2>Produtos prontos e lançamentos</h2>
+            </div>
+
+            <div
+              className="grid gap-5"
+              style={{
+                gridTemplateColumns:
+                  "repeat(auto-fill, minmax(280px, 1fr))",
+              }}
+            >
+              {produtosProntos.map((item) => {
+                const onShopee = item.status === "na_shopee";
+                return (
+                  <article key={item.id} className="product-card">
+                    {item.image ? (
+                      <div className="product-img">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : null}
+                    <div className="flex flex-1 flex-col p-5">
+                      <h4
+                        className="text-ink"
+                        style={{
+                          fontSize: 15,
+                          fontWeight: 600,
+                          lineHeight: 1.35,
+                          marginBottom: 6,
+                        }}
+                      >
+                        {item.title}
+                      </h4>
+                      <p
+                        className="text-ink3"
+                        style={{ fontSize: 13, marginBottom: 12 }}
+                      >
+                        {item.description}
+                      </p>
+
+                      <div className="mb-4">
+                        <span className="sales-badge">
+                          {onShopee
+                            ? `Pronta na Shopee · ${item.displayOrders}`
+                            : `Em lançamento · ${item.displayOrders}`}
+                        </span>
+                      </div>
+
+                      <div className="mt-auto flex flex-wrap gap-2">
+                        <a
+                          href={buildWhatsAppLink({
+                            phone: SITE.whatsapp,
+                            context: "patches",
+                            itemTitle: item.title,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-wa"
+                          style={{ fontSize: 13, padding: "9px 18px" }}
+                        >
+                          <WhatsAppIcon size={15} />
+                          Reservar
+                        </a>
+                        {onShopee ? (
+                          <a
+                            href={item.shopeeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-shopee-redesign"
+                            style={{ fontSize: 13, padding: "9px 18px" }}
+                          >
+                            Ver na Shopee
+                          </a>
+                        ) : (
+                          <span
+                            className="btn-outline"
+                            style={{
+                              fontSize: 13,
+                              padding: "8px 16px",
+                              cursor: "default",
+                            }}
+                          >
+                            Em breve na Shopee
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </section>
 
-        <section className="glass-panel space-y-4 p-6 md:p-8">
-          <h2 className="section-title">Serviços de Patch Bordado</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {patchServices.map((service) => (
-              <article key={service.id} className="group rounded-xl border-2 border-foreground/55 bg-surface/95 p-4">
-                <div className="relative mb-3 aspect-[4/3] overflow-hidden rounded-lg border border-foreground/30 bg-gradient-to-br from-deep-purple/60 to-deep-teal/60">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="text-base font-semibold">{service.title}</h3>
-                <p className="soft-text mt-2 text-sm">{service.description}</p>
-                <ul className="mt-3 space-y-1 text-xs text-foreground/85">
-                  <li><strong>Aplicação:</strong> {service.what}</li>
-                  <li><strong>Uso indicado:</strong> {service.where}</li>
-                  <li><strong>Prazo médio:</strong> {service.leadTime}</li>
-                  <li><strong>Pedido mínimo:</strong> {service.minimumOrder}</li>
-                </ul>
-                <div className="mt-4">
-                  <WhatsAppCta
-                    href={buildWhatsAppLink({
-                      phone: SITE.whatsapp,
-                      context: "patches",
-                      itemTitle: service.title,
-                    })}
-                    label="Solicitar pelo WhatsApp"
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <SegmentGallery
+          label="Galeria"
+          title="Patches em produção"
+          images={homeAtelierGallery.slice(0, 6)}
+        />
 
-        <section className="glass-panel space-y-4 p-6 md:p-8">
-          <h2 className="section-title">Produtos Prontos e Lançamentos</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {produtosProntos.map((item) => (
-              <article key={item.id} className="group rounded-xl border-2 border-foreground/55 bg-surface/95 p-5">
-                {item.image ? (
-                  <div className="relative mb-3 aspect-[4/3] overflow-hidden rounded-lg border border-foreground/30 bg-gradient-to-br from-deep-purple/60 to-deep-teal/60">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : null}
-                <div className="mb-2 flex flex-wrap gap-2">
-                  {item.tags.map((tag) => (
-                    <span key={tag} className="rounded-full bg-brand-purple/20 px-2.5 py-1 text-xs font-semibold text-foreground">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-base font-semibold">{item.title}</h3>
-                <p className="soft-text mt-2 text-sm">{item.description}</p>
-                <ul className="mt-3 space-y-1 text-xs text-foreground/85">
-                  <li><strong>Categoria:</strong> {item.tags.slice(0, 2).join(" · ")}</li>
-                  <li>
-                    <strong>Disponibilidade:</strong>{" "}
-                    {item.status === "na_shopee" ? "Pronta na Shopee" : "Em lançamento"}
-                  </li>
-                  <li>
-                    <strong>Canal:</strong>{" "}
-                    {item.status === "na_shopee" ? "Shopee e WhatsApp" : "WhatsApp"}
-                  </li>
-                  <li><strong>Demanda:</strong> {item.displayOrders} histórico</li>
-                </ul>
+        <FaqSection faqs={homeFaqs} />
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <WhatsAppCta
-                    href={buildWhatsAppLink({
-                      phone: SITE.whatsapp,
-                      context: "patches",
-                      itemTitle: item.title,
-                    })}
-                    label="Reservar no WhatsApp"
-                  />
-                  {item.status === "na_shopee" ? (
-                    <a href={item.shopeeUrl} target="_blank" rel="noopener noreferrer" className="btn-shopee">
-                      Ver na Shopee
-                    </a>
-                  ) : (
-                    <span className="inline-flex rounded-full border border-accent px-2.5 py-1 text-xs font-semibold text-accent">
-                      Em breve na Shopee
-                    </span>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <CtaBanner
+          title="Quer um patch personalizado?"
+          description="Mande sua arte pelo WhatsApp e receba um orçamento rápido com prazo e valor."
+          whatsappMessage="Olá! Tenho interesse em patches bordados. Pode me passar informações?"
+          alt
+        />
       </main>
     </>
   );
 }
-
-
-

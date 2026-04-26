@@ -1,6 +1,6 @@
-﻿import WhatsAppCta from "@/components/WhatsAppCta";
-import PackDecor from "@/components/brand/PackDecor";
-import { asset } from "@/src/lib/asset";
+import StackedCards from "@/components/home/StackedCards";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import { homeStackedImages } from "@/src/data/home";
 import { SITE } from "@/src/lib/site";
 
 type HomeHeroProps = {
@@ -9,81 +9,107 @@ type HomeHeroProps = {
 
 export default function HomeHero({ whatsappLink }: HomeHeroProps) {
   return (
-    <section className="hero-contained relative isolate overflow-hidden rounded-[2rem] px-6 py-14 md:py-20">
-      <PackDecor accent="teal" />
+    <section
+      className="relative isolate overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, var(--cream) 0%, var(--cream2) 100%)",
+        padding: "80px 0 64px",
+      }}
+    >
+      <div className="wrap grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <span
+            className="mb-5 inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.08em]"
+            style={{ background: "var(--green-l)", color: "var(--green)" }}
+          >
+            <span aria-hidden="true">🧵</span>
+            De Maringá para todo o Brasil
+          </span>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[10%] top-16 -z-10 h-24 w-24 animate-pulse rounded-full border-4 border-secondary/45 opacity-35"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[6%] top-28 -z-10 h-16 w-16 rotate-45 border-4 border-tertiary/60 opacity-35"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-10 left-[18%] -z-10 h-32 w-32 rounded-full bg-quaternary/20 blur-2xl"
-      />
-
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-center">
-        <div className="relative z-10">
-          <div className="-rotate-2 mb-5 inline-block bg-tertiary px-4 py-1 text-xs font-bold uppercase tracking-wide text-foreground shadow-[4px_4px_0px_0px_#161616]">
-            {SITE.city} · Bordado e Patches · Envio Brasil
-          </div>
-
-          <h1 className="headline text-[1.6rem] leading-tight md:text-[2.3rem] lg:text-[3rem]">
-            Bordado Computadorizado, Patches e Afetivos para todas as ocasiões
+          <h1
+            className="text-ink"
+            style={{
+              fontSize: "clamp(36px, 5vw, 60px)",
+              fontWeight: 700,
+              marginBottom: 20,
+              textWrap: "pretty",
+              lineHeight: 1.1,
+            }}
+          >
+            Bordados que contam histórias, patches que marcam identidade
           </h1>
 
-          <p className="soft-text mt-5 max-w-xl text-base md:text-lg">
-            <span>
-              Solicite{" "}
-              <strong>Serviços e Produtos Bordados pelo WhatsApp</strong>{" "}
-            </span>
-            <span>
-              ou Compre <strong>Produtos Prontos na Shopee</strong>
-            </span>
+          <p
+            className="text-ink2"
+            style={{
+              fontSize: 17,
+              maxWidth: 480,
+              marginBottom: 32,
+              lineHeight: 1.65,
+            }}
+          >
+            De bordado computadorizado em uniformes e patches ao bordado artesanal
+            para seu momento ideal — a Trilinha entrega precisão e afeto em cada ponto.
           </p>
 
-          <ul className="mt-5 space-y-1.5 text-sm text-foreground/90 md:text-base">
-            <li>- Computadorizado: uma infinidade de aplicaçoes e projetos</li>
-            <li>- Patches: termocolante ou velcro (P/M/G/GG)</li>
-            <li>
-              - Afetivos: aquela lembrança especial para pessoas e momentos
-              especiais
-            </li>
-          </ul>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <WhatsAppCta
+          <div className="flex flex-wrap gap-3">
+            <a
               href={whatsappLink}
-              label="Pedir Orçamento no WhatsApp"
-              className="h-14 px-8 text-base"
-            />
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-wa"
+            >
+              <WhatsAppIcon size={18} />
+              Pedir orçamento grátis
+            </a>
             <a
               href={SITE.socials.shopee}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-shopee h-14 px-8 text-base"
+              className="btn-outline"
             >
-              Ver Produtos na Shopee
+              <span aria-hidden="true">🛍️</span>
+              Ver patches na Shopee
             </a>
+          </div>
+
+          <div
+            className="mt-7 flex flex-wrap gap-6 border-t pt-6"
+            style={{ borderColor: "var(--cream3)" }}
+          >
+            <div className="flex flex-col">
+              <strong
+                className="font-display text-teal-brand"
+                style={{ fontSize: 28, fontWeight: 700 }}
+              >
+                250+
+              </strong>
+              <span className="text-ink3 text-[12px]">Vendas concluídas</span>
+            </div>
+            <div className="flex flex-col">
+              <strong
+                className="font-display text-teal-brand"
+                style={{ fontSize: 28, fontWeight: 700 }}
+              >
+                5★
+              </strong>
+              <span className="text-ink3 text-[12px]">Avaliação média</span>
+            </div>
+            <div className="flex flex-col">
+              <strong
+                className="font-display text-teal-brand"
+                style={{ fontSize: 28, fontWeight: 700 }}
+              >
+                4+
+              </strong>
+              <span className="text-ink3 text-[12px]">Anos de experiência</span>
+            </div>
           </div>
         </div>
 
         <div className="relative">
-          <div className="relative z-10 overflow-hidden rounded-[2.5rem] rounded-tl-none border-4 border-foreground bg-surface p-2 shadow-[12px_12px_0px_0px_rgba(85,170,109,0.55)]">
-            <img
-              src={asset("/images/bg-rigth-hero.png")}
-              alt="Máquina de bordado em operação no ateliê"
-              className="aspect-square w-full rounded-[2.2rem] rounded-tl-none object-cover grayscale transition-all duration-300 hover:grayscale-0"
-              loading="eager"
-            />
-          </div>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-8 -right-8 -z-10 h-full w-full rounded-[2.5rem] rounded-br-none bg-accent/20"
-          />
+          <StackedCards images={homeStackedImages} />
         </div>
       </div>
     </section>

@@ -1,76 +1,103 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
+import { useEffect, useState } from "react";
 import { asset } from "@/src/lib/asset";
+import { SITE } from "@/src/lib/site";
+import { buildWhatsAppLink } from "@/src/lib/whatsapp";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const links = [
-  { href: "/bordado-computadorizado/", label: "Computadorizado" },
-  { href: "/patches-bordados/", label: "Patch" },
-  { href: "/bordado-afetivo/", label: "Afetivo" },
-  { href: "/links/", label: "Links" },
+  { href: "/bordado-computadorizado/", label: "Bordado Computadorizado" },
+  { href: "/patches-bordados/", label: "Patches Bordados" },
+  { href: "/bordado-afetivo/", label: "Bordado Afetivo" },
   { href: "/contato/", label: "Contato" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
-  const mobileMenuRef = useRef<HTMLDetailsElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const whatsappLink = buildWhatsAppLink({
+    phone: SITE.whatsapp,
+    context: "site",
+  });
 
-  const closeMobileMenu = () => {
-    mobileMenuRef.current?.removeAttribute("open");
-  };
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const isActive = (href: string) =>
+    pathname === href || pathname === href.replace(/\/$/, "");
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-foreground/90 bg-background/90 backdrop-blur-xl">
-      <div className="page-wrap flex items-center justify-between gap-3 py-4">
+    <header
+      className="sticky top-0 z-[100] border-b border-cream3"
+      style={{
+        background: "rgba(247,244,238,0.92)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+      }}
+    >
+      <div className="wrap flex h-16 items-center justify-between gap-4">
         <Link
           href="/"
-          className="logo-flutter-group group flex items-center gap-3.5 transition-transform duration-150 active:scale-[0.98]"
+          className="flex items-center gap-3 transition-opacity hover:opacity-90"
+          aria-label="Trilinha Bordados — início"
         >
           <Image
-            src={asset("/images/trilhinha_logo.svg")}
+            src={asset("/images/logo.png")}
             alt="Logo Trilinha Bordados"
-            width={68}
-            height={68}
+            width={40}
+            height={40}
             priority
-            className="logo-flutter logo-flutter-onload block dark:hidden"
+            className="h-10 w-10"
+            style={{ mixBlendMode: "multiply" }}
           />
-          <Image
-            src={asset("/images/trilhinha_logo_white-mix.svg")}
-            alt="Logo Trilinha Bordados"
-            width={68}
-            height={68}
-            priority
-            className="logo-flutter logo-flutter-onload hidden dark:block"
-          />
-          <span className="font-didot text-foreground transition-opacity duration-200 group-hover:opacity-90">
-            <span className="block text-[1.32rem] leading-[0.84] sm:text-[1.34rem] md:text-[1.52rem]">
-              Trilinha
-            </span>
-            <span className="block text-[1.32rem] leading-[0.84] sm:text-[1.34rem] md:text-[1.52rem]">
-              Bordados
-            </span>
+          <span className="font-display text-[18px] leading-[1.1] text-ink">
+            Trilinha Bordados
           </span>
         </Link>
 
-        <nav className="hidden items-center justify-end gap-2 text-base md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {links.map((item) => {
-            const active =
-              pathname === item.href || pathname === item.href.slice(0, -1);
-
+            const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-3 py-1 transition-all duration-300 active:scale-95 ${
-                  active
-                    ? "text-deep-purple underline decoration-2 decoration-wavy underline-offset-4 dark:text-brand-purple"
-                    : "text-foreground/85 hover:text-deep-purple hover:underline hover:decoration-2 hover:decoration-wavy hover:underline-offset-4 dark:hover:text-brand-purple"
-                }`}
                 aria-current={active ? "page" : undefined}
+                className={`rounded-lg px-3 py-1.5 text-[14px] font-medium transition-all ${
+                  active
+                    ? "text-teal-brand"
+                    : "text-ink2 hover:text-teal-brand"
+                }`}
+                style={
+                  active
+                    ? { background: "var(--teal-l)" }
+                    : undefined
+                }
+                onMouseEnter={(event) => {
+                  if (!active) {
+                    (event.currentTarget as HTMLAnchorElement).style.background =
+                      "var(--teal-l)";
+                  }
+                }}
+                onMouseLeave={(event) => {
+                  if (!active) {
+                    (event.currentTarget as HTMLAnchorElement).style.background =
+                      "";
+                  }
+                }}
               >
                 {item.label}
               </Link>
@@ -78,45 +105,61 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden md:block">
-          <ThemeToggle />
-        </div>
+        <div className="flex items-center gap-2">
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-wa hidden lg:inline-flex"
+            style={{ padding: "10px 20px", fontSize: 13 }}
+          >
+            <WhatsAppIcon size={16} />
+            <span>WhatsApp</span>
+          </a>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <details ref={mobileMenuRef} className="static">
-            <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full border-2 border-foreground px-3 py-1.5 text-sm font-bold text-foreground transition hover:bg-tertiary/60">
-              <span className="inline-flex flex-col gap-1">
-                <span className="block h-0.5 w-4 bg-foreground" />
-                <span className="block h-0.5 w-4 bg-foreground" />
-                <span className="block h-0.5 w-4 bg-foreground" />
-              </span>
-              Menu
-            </summary>
-
-            <div className="absolute left-0 right-0 top-full z-50 w-full border-t-2 border-foreground bg-surface/95 p-3 shadow-pop">
-              {links.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  className="block rounded-[var(--radius-sm)] px-3 py-2 text-base text-foreground/90 transition hover:bg-background/70 hover:text-foreground"
-                >
-                  {item.label}
-                </Link>
-              ))}
-
-              <div className="mt-2 border-t-2 border-foreground/30 pt-2">
-                <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-foreground/70">
-                  Tema
-                </p>
-                <div className="px-1">
-                  <ThemeToggle />
-                </div>
-              </div>
-            </div>
-          </details>
+          <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-lg lg:hidden"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            <span className="flex flex-col gap-[5px]">
+              <span className="block h-[2px] w-[22px] rounded bg-ink" />
+              <span className="block h-[2px] w-[22px] rounded bg-ink" />
+              <span className="block h-[2px] w-[22px] rounded bg-ink" />
+            </span>
+          </button>
         </div>
       </div>
+
+      {menuOpen ? (
+        <div
+          className="fixed inset-x-0 bottom-0 top-16 z-[99] flex flex-col gap-1 overflow-y-auto px-6 py-6 lg:hidden"
+          style={{ background: "var(--cream)" }}
+        >
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="border-b border-cream3 py-3.5 text-[16px] font-medium text-ink"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-wa mt-4 justify-center"
+            onClick={() => setMenuOpen(false)}
+          >
+            <WhatsAppIcon size={18} />
+            <span>Falar no WhatsApp</span>
+          </a>
+        </div>
+      ) : null}
     </header>
   );
 }

@@ -1,29 +1,17 @@
-﻿import Image from "next/image";
+import Image from "next/image";
+import Link from "next/link";
 import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 import { buildWhatsAppLink } from "@/src/lib/whatsapp";
 
-function ShopeeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M7 6h10l1.2 13H5.8L7 6Zm2.6-1A2.4 2.4 0 0 1 12 2.6 2.4 2.4 0 0 1 14.4 5h-1.5A.9.9 0 0 0 12 4.1.9.9 0 0 0 11.1 5H9.6Z"
-      />
-    </svg>
-  );
-}
+const googleMapsUrl = "https://maps.app.goo.gl/GpvovgSf9HrHq4VBA";
 
-function MarketplaceIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M2 9.5 4.2 5h15.6L22 9.5V20H2V9.5Zm4.1 0a2.4 2.4 0 0 0 4.6 0h2.6a2.4 2.4 0 0 0 4.6 0h2.2L18.8 7H5.2L3.9 9.5h2.2Z"
-      />
-    </svg>
-  );
-}
+const serviceLinks = [
+  { href: "/bordado-computadorizado/", label: "Bordado Computadorizado" },
+  { href: "/patches-bordados/", label: "Patches Bordados" },
+  { href: "/bordado-afetivo/", label: "Bordado Afetivo" },
+  { href: "/contato/", label: "Contato" },
+];
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -31,75 +19,148 @@ export default function Footer() {
     phone: SITE.whatsapp,
     context: "rodape",
   });
-  const phoneCallLink = `tel:+${SITE.whatsapp}`;
 
   return (
-    <footer className="mt-14 border-t-2 border-foreground/90">
-      <div className="page-wrap py-8 text-sm text-foreground/85">
-        <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-          <div className="flex items-center justify-center gap-3 md:justify-start">
+    <footer
+      className="text-white/85"
+      style={{
+        background: "var(--ink)",
+        padding: "56px 0 32px",
+      }}
+    >
+      <div className="wrap">
+        <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr] md:gap-12">
+          <div>
             <Image
-              src={asset("/images/trilhinha_logo.svg")}
+              src={asset("/images/trilhinha_logo_white.svg")}
               alt="Logo Trilinha Bordados"
-              width={28}
-              height={28}
-              className="block dark:hidden"
+              width={36}
+              height={36}
+              className="mb-3 h-9 w-9"
             />
-            <Image
-              src={asset("/images/trilhinha_logo_white-mix.svg")}
-              alt="Logo Trilinha Bordados"
-              width={28}
-              height={28}
-              className="hidden dark:block"
-            />
-            <div className="text-center md:text-left">
-              <p className="font-brand text-base font-bold text-foreground">{SITE.name}</p>
-              <p className="text-xs text-foreground/70">{SITE.city}/{SITE.state}</p>
-            </div>
+            <p
+              className="font-display text-white"
+              style={{ fontSize: 20, marginBottom: 4 }}
+            >
+              {SITE.name}
+            </p>
+            <small
+              className="block text-white/60"
+              style={{ fontSize: 12 }}
+            >
+              Ateliê em {SITE.city}/{SITE.state} · Envio nacional
+            </small>
+            <p
+              className="mt-4 text-white/60"
+              style={{ fontSize: 14, lineHeight: 1.6 }}
+            >
+              Bordado computadorizado, patches e bordado afetivo feitos com
+              precisão e carinho desde Maringá.
+            </p>
           </div>
 
-          <div className="flex flex-col items-center gap-1 text-center md:items-end md:text-right">
-            <a href={phoneCallLink} className="font-semibold text-foreground hover:text-accent">
-              {SITE.phoneDisplay}
-            </a>
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-foreground/80 hover:text-accent"
+          <div>
+            <h5
+              className="text-white/50"
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                marginBottom: 16,
+              }}
             >
-              Conversar no WhatsApp
-            </a>
+              Serviços
+            </h5>
+            <ul className="flex flex-col gap-2">
+              {serviceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-white/75 transition-colors hover:text-white"
+                    style={{ fontSize: 14 }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h5
+              className="text-white/50"
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                marginBottom: 16,
+              }}
+            >
+              Contato
+            </h5>
+            <ul className="flex flex-col gap-2">
+              <li>
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/75 transition-colors hover:text-white"
+                  style={{ fontSize: 14 }}
+                >
+                  ({SITE.phoneDisplay.split(" ")[0]}) {SITE.phoneDisplay.split(" ")[1]}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SITE.socials.shopee}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/75 transition-colors hover:text-white"
+                  style={{ fontSize: 14 }}
+                >
+                  Shopee
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SITE.socials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/75 transition-colors hover:text-white"
+                  style={{ fontSize: 14 }}
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/75 transition-colors hover:text-white"
+                  style={{ fontSize: 14 }}
+                >
+                  Ver no Google Maps
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-5 rounded-[var(--radius-md)] border-2 border-foreground bg-surface/95 p-3 shadow-pop">
-          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wide text-foreground/75">Canais de Venda</p>
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <a
-              href={SITE.socials.shopee}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="badge gap-1 border-accent/35 bg-accent/10 text-foreground hover:bg-accent/20"
-              aria-label="Shopee Seller"
-            >
-              <ShopeeIcon />
-              Shopee Seller
-            </a>
-            <a
-              href={SITE.socials.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="badge gap-1 border-quaternary/50 bg-quaternary/20 text-foreground hover:bg-quaternary/35"
-              aria-label="Facebook Marketplace"
-            >
-              <MarketplaceIcon />
-              Facebook Marketplace
-            </a>
-          </div>
+        <div
+          className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t pt-6 text-white/40"
+          style={{
+            borderColor: "rgba(255,255,255,0.1)",
+            fontSize: 13,
+          }}
+        >
+          <span>
+            © {year} {SITE.name} · {SITE.city}/{SITE.state}
+          </span>
+          <span>Desenvolvido com carinho.</span>
         </div>
-
-        <p className="mt-4 text-center text-xs text-foreground/70">(c) {year} {SITE.name}</p>
       </div>
     </footer>
   );

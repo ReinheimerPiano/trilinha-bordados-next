@@ -1,5 +1,5 @@
-﻿import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import type { Metadata } from "next";
+import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,14 +8,18 @@ import JsonLd from "@/components/JsonLd";
 import { asset } from "@/src/lib/asset";
 import { SITE } from "@/src/lib/site";
 
-const jakarta = Plus_Jakarta_Sans({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-jakarta",
+  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
+  display: "swap",
 });
 
-const outfit = Outfit({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
 const siteTitle = "Trilinha Bordados";
@@ -87,18 +91,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const themeInitScript = `
-  (function () {
-    try {
-      var saved = localStorage.getItem('theme');
-      var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
-      var root = document.documentElement;
-      root.classList.toggle('dark', theme === 'dark');
-      root.style.colorScheme = theme;
-    } catch (e) {}
-  })();
-  `;
-
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -160,11 +152,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body className={`${jakarta.variable} ${outfit.variable} min-h-screen`}>
+    <html lang="pt-BR" className={`${playfair.variable} ${dmSans.variable}`}>
+      <body className="min-h-screen">
         <JsonLd data={localBusiness} />
         <JsonLd data={webSite} />
         <Header />
@@ -175,5 +164,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-

@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { SITE } from "@/src/lib/site";
 
 export const metadata: Metadata = {
@@ -16,66 +17,126 @@ const officialLinks = [
   {
     label: "Instagram",
     href: SITE.socials.instagram,
-    tone: "bg-accent/22 dark:bg-deep-purple/88",
     description: "Portfólio, bastidores e novidades.",
-    cta: "Ver Instagram oficial ->",
+    cta: "Ver Instagram oficial →",
+    color: "#E1306C",
   },
   {
     label: "Facebook",
     href: SITE.socials.facebook,
-    tone: "bg-primary/22 dark:bg-deep-teal/88",
     description: "Página oficial e atualizações.",
-    cta: "Abrir Facebook oficial ->",
+    cta: "Abrir Facebook oficial →",
+    color: "#1877F2",
   },
   {
     label: "Shopee",
     href: SITE.socials.shopee,
-    tone: "bg-secondary/22 dark:bg-deep-green/88",
     description: "Patches e kits com envio para todo o Brasil.",
-    cta: "Comprar na Shopee ->",
+    cta: "Comprar na Shopee →",
+    color: "#EE4D2D",
   },
 ];
 
 export default function LinksPage() {
   return (
-    <main className="py-2 md:py-4">
-      <section className="glass-panel p-6 md:p-8">
-        <h1 className="headline">Links Oficiais da Trilinha Bordados</h1>
-        <p className="soft-text mt-3">
-          Acesse nossos canais verificados para orçamentos de bordado
-          computadorizado e compra de patches bordados.
-        </p>
+    <main>
+      <section
+        className="relative isolate overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, var(--cream) 0%, var(--cream2) 100%)",
+          padding: "64px 0 48px",
+        }}
+      >
+        <div className="wrap">
+          <p
+            className="text-ink3"
+            style={{ fontSize: 13, marginBottom: 16 }}
+          >
+            <Link href="/" className="hover:text-teal-brand">
+              Início
+            </Link>{" "}
+            →{" "}
+            <span className="text-teal-brand" style={{ fontWeight: 500 }}>
+              Links oficiais
+            </span>
+          </p>
+          <p className="section-label">Links oficiais</p>
+          <h1
+            className="text-ink"
+            style={{
+              fontSize: "clamp(32px, 4vw, 52px)",
+              fontWeight: 700,
+              margin: "8px 0 16px",
+              maxWidth: 720,
+              lineHeight: 1.15,
+            }}
+          >
+            Links oficiais da Trilinha Bordados
+          </h1>
+          <p
+            className="text-ink2"
+            style={{ fontSize: 17, maxWidth: 600, lineHeight: 1.6 }}
+          >
+            Acesse nossos canais verificados para orçamentos de bordado e
+            compra de patches bordados.
+          </p>
+        </div>
       </section>
 
-      <section className="glass-panel p-6 md:p-8">
-        <div className="grid gap-4 md:grid-cols-3">
+      <section className="section">
+        <div className="wrap grid gap-6 md:grid-cols-3">
           {officialLinks.map((item) => (
             <a
               key={item.href}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group rounded-[2rem] rounded-br-none border-4 border-foreground ${item.tone} p-5 shadow-[8px_8px_0px_0px_rgba(22,22,22,0.28)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[10px_10px_0px_0px_rgba(22,22,22,0.33)] dark:shadow-[7px_7px_0px_0px_rgba(229,229,229,0.22)] dark:hover:shadow-[9px_9px_0px_0px_rgba(229,229,229,0.3)]`}
+              className="service-card no-underline"
             >
-              <h2 className="text-lg font-semibold text-foreground">{item.label}</h2>
-              <p className="mt-2 text-sm text-foreground/90">
-                {item.description}
-              </p>
-              <p className="mt-3 text-sm font-semibold text-deep-purple transition-colors group-hover:text-violet dark:text-brand-purple dark:group-hover:text-accent">
-                {item.cta}
-              </p>
+              <div className="flex flex-1 flex-col p-7">
+                <span
+                  className="mb-3 inline-flex w-fit rounded-full px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.08em]"
+                  style={{
+                    background: `${item.color}15`,
+                    color: item.color,
+                  }}
+                >
+                  {item.label}
+                </span>
+                <h2
+                  className="text-ink"
+                  style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                >
+                  {item.label}
+                </h2>
+                <p
+                  className="text-ink2"
+                  style={{ fontSize: 14, lineHeight: 1.55, marginBottom: 18 }}
+                >
+                  {item.description}
+                </p>
+                <span
+                  className="mt-auto text-[14px] font-semibold"
+                  style={{ color: item.color }}
+                >
+                  {item.cta}
+                </span>
+              </div>
             </a>
           ))}
         </div>
       </section>
 
-      <section className="glass-panel p-4 md:p-5">
-        <p className="text-sm text-foreground/85">
+      <section className="section section-alt">
+        <div
+          className="wrap text-center text-ink2"
+          style={{ fontSize: 14 }}
+        >
           Para sua segurança, estes são os únicos links oficiais da Trilinha
           Bordados.
-        </p>
+        </div>
       </section>
     </main>
   );
 }
-
