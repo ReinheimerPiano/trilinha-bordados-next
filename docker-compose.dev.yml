@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: trilinha-next-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Bind mount do código para hot reload
+      - ./:/app
+      # Volumes anônimos isolam node_modules e .next do host
+      # (evita conflito Linux x Windows e mantém deps do container)
+      - /app/node_modules
+      - /app/.next
+    environment:
+      NODE_ENV: development
+      # Polling necessário em WSL2 / volumes montados do Windows
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      # Telemetria do Next desligada em dev
+      NEXT_TELEMETRY_DISABLED: "1"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
