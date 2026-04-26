@@ -7,3 +7,14 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .env*
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Next auto-generated
+next-env.d.ts
+
+# Scratch / dados raspados
+.cookies.txt
+.shop.html
+src/tmp/
